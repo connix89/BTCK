@@ -1,0 +1,105 @@
+/* New Chat layout with alternating analysis indicator and step-by-step reveal */
+.nc-page { min-height: 100vh; background: #0b1220; color: #e5e7eb; }
+.nc-header { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: space-between; }
+.nc-header h1 { margin: 0; font-weight: 600; color: #93c5fd; }
+.nc-nav { display: flex; gap: 1rem; }
+.nc-link { color: #93c5fd; text-decoration: none; }
+.nc-link:hover { text-decoration: underline; }
+
+.nc-layout { max-width: 1100px; margin: 0 auto; padding: 1rem; display: grid; grid-template-rows: auto auto; gap: 1rem; }
+
+.nc-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.nc-panel { background: #0f172a; border: 1px solid #1f2937; border-radius: 14px; padding: 1rem; min-height: 360px; box-shadow: 0 10px 30px rgba(0,0,0,.25); transition: border-color .2s ease, box-shadow .2s ease; }
+.nc-panel.is-active { border-color: #3b82f6; box-shadow: 0 12px 34px rgba(37,99,235,.25); }
+
+.nc-panel__header { display: flex; align-items: center; gap: .6rem; padding-bottom: .75rem; border-bottom: 1px solid #1f2937; margin-bottom: .75rem; }
+.nc-ico { font-size: 1.05rem; }
+
+.nc-badge { margin-left: auto; font-size: .8rem; color: #93c5fd; background: rgba(59,130,246,.12); border: 1px solid rgba(59,130,246,.35); padding: .2rem .5rem; border-radius: 999px; display: inline-flex; align-items: center; gap: .35rem; }
+.nc-badge--pulse { animation: glow 1.4s ease-in-out infinite; }
+
+.typing { display: inline-flex; gap: 2px; }
+.typing i { width: 4px; height: 4px; background: #93c5fd; border-radius: 50%; display: inline-block; opacity: .6; animation: bounce 1.2s infinite; }
+.typing i:nth-child(2) { animation-delay: .12s; }
+.typing i:nth-child(3) { animation-delay: .24s; }
+
+.nc-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .4rem; }
+.nc-step { display: flex; align-items: center; gap: .5rem; background: rgba(255,255,255,.04); border: 1px solid #263042; border-radius: 10px; padding: .5rem .6rem; animation: fadeInUp .28s ease both; }
+.nc-step--fix { background: rgba(255,215,0,.06); border-color: rgba(255,215,0,.25); }
+.nc-step__dot { width: 8px; height: 8px; background: #64748b; border-radius: 999px; box-shadow: 0 0 0 0 rgba(100,116,139,.6); animation: dotPulse 1.5s infinite; }
+
+.nc-fix h4 { margin: .4rem 0; color: #fef08a; }
+.nc-empty { opacity: .7; text-align: center; padding: 2rem; }
+
+/* Input row: fix overlap and small textarea issues */
+.nc-input { display: grid; grid-template-columns: 1fr auto; gap: .75rem; align-items: stretch; }
+.nc-input textarea { width: 100%; min-height: 120px; max-height: 280px; resize: vertical; background: #0b1220; color: #e5e7eb; border: 1px solid #334155; border-radius: 10px; padding: .75rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 14px; box-sizing: border-box; }
+.nc-send { background: #2563eb; color: white; border: none; padding: .75rem 1rem; border-radius: 10px; font-weight: 700; cursor: pointer; height: 48px; align-self: end; }
+.nc-send:disabled { opacity: .6; cursor: default; }
+
+/* --- Chat stream container --- */
+.nc-chat { background: #0f172a; border: 1px solid #1f2937; border-radius: 14px; padding: 1rem; min-height: 420px; max-height: calc(100vh - 260px); overflow-y: auto; box-shadow: inset 0 1px 0 rgba(255,255,255,.02); }
+
+/* --- Message rows --- */
+.nc-msg { display: flex; margin-bottom: .9rem; }
+/* user rows are left-aligned by default */
+.nc-msg.assistant { justify-content: flex-end; }
+
+/* Right-aligned bubble helper for user messages */
+.nc-right { margin-left: auto; }
+
+/* --- Bubbles --- */
+.nc-bubble { max-width: 86%; border-radius: 14px; padding: .75rem .85rem; border: 1px solid #283344; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+.nc-bubble--user { background: #1f2937; border-color: #334155; }
+.nc-bubble--assistant { background: #0e1726; border-color: #263042; }
+
+/* --- Split assistant bubble (system vs LLM) --- */
+.nc-split { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+.nc-col { background: rgba(255,255,255,.03); border: 1px solid #263042; border-radius: 12px; padding: .6rem; }
+.nc-col__header { display: flex; align-items: center; gap: .45rem; padding-bottom: .5rem; border-bottom: 1px dashed #263042; margin-bottom: .5rem; }
+
+/* --- Titles and badges --- */
+.nc-user-title { font-weight: 700; margin-bottom: .35rem; color: #93c5fd; }
+.nc-code { margin: 0; white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size: 13px; color: #e5e7eb; }
+.nc-typing-row { display: flex; align-items: center; gap: .5rem; color: #9ca3af; }
+
+/* --- Animations --- */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes glow { 0%,100% { box-shadow: 0 0 0 0 rgba(59,130,246,.35) } 50% { box-shadow: 0 0 0 6px rgba(59,130,246,0) } }
+@keyframes bounce { 0%, 60%, 100% { transform: translateY(0) } 30% { transform: translateY(-3px) } }
+@keyframes dotPulse { 0% { box-shadow: 0 0 0 0 rgba(100,116,139,.6) } 70% { box-shadow: 0 0 0 8px rgba(100,116,139,0) } 100% { box-shadow: 0 0 0 0 rgba(100,116,139,0) } }
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .nc-panels { grid-template-columns: 1fr; }
+  .nc-bubble { max-width: 100%; }
+  .nc-split { grid-template-columns: 1fr; }
+  .nc-input { grid-template-columns: 1fr; }
+  .nc-send { width: 100%; height: 44px; }
+}
+
+.nc-patch {
+  margin-top: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+.nc-patch strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #a5b4fc; /* indigo-300 */
+}
+.nc-patch pre {
+  margin: 0;
+  font-family: inherit;
+  color: #e5e7eb; /* gray-200 */
+  white-space: pre-wrap;
+}
+
+.nc-code-preview {
+  margin-bottom: 0.75rem;
+  border: 1px solid #263042;
+  border-radius: 10px;
+  overflow: hidden;
+}

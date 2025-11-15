@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Standalone React Test</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #1a1a2e; color: white; }
+        .test { color: #4facfe; font-size: 24px; }
+    </style>
+</head>
+<body>
+    <div id="standalone-root"></div>
+
+    <script>
+        const { createElement } = React;
+        const { createRoot } = ReactDOM;
+
+        const App = () => createElement('div', { style: { padding: '20px' } },
+            createElement('h1', { className: 'test' }, '🚀 Standalone React Working!'),
+            createElement('p', null, 'React is loading from CDN successfully.')
+        );
+
+        const root = createRoot(document.getElementById('standalone-root'));
+        root.render(createElement(React.StrictMode, null, createElement(App)));
+    </script>
+</body>
+</html>
