@@ -1,1 +1,33 @@
-/.gitkeep
+# Node.js
+frontend/node_modules/
+frontend/dist/
+frontend/package-lock.json
+
+# Python
+backend/__pycache__/
+backend/myenv/
+backend/venv/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+
+# Python virtual environments
+.env
+
+# Vite
+.vite/
+vite-env.d.ts
+
+# IDE-specific files
+.idea/
+.vscode/
+*.iml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
