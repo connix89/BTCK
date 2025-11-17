@@ -77,11 +77,11 @@ export default function NewChatPage() {
   return (
     <div className="nc-page">
       <header className="nc-header">
-        <h1>💬 Chat Box Mới</h1>
-        <nav className="nc-nav">
+        <h1>💬 Assistant</h1>
+        {/* <nav className="nc-nav">
           <Link to="/" className="nc-link">Trang chủ</Link>
           <Link to="/chatbot" className="nc-link">Chatbot cũ</Link>
-        </nav>
+        </nav> */}
       </header>
 
       <div className="nc-layout">
@@ -100,7 +100,7 @@ export default function NewChatPage() {
                   <div className="nc-bubble nc-bubble--user">
                     <div className="nc-user-title">Bạn</div>
                     <div className="nc-code-preview">
-                      <SyntaxHighlighter language="python" style={vscDarkPlus} customStyle={{ margin: 0, borderRadius: 8, background: '#0f0f23' }}>
+                      <SyntaxHighlighter language="python" style={vscDarkPlus} customStyle={{ margin: 0, borderRadius: 8, background: '#0f0f23' }} showLineNumbers wrapLines>
                         {msg.text}
                       </SyntaxHighlighter>
                     </div>
@@ -142,9 +142,8 @@ export default function NewChatPage() {
                         </ul>
                         {msg.progress.rule >= msg.analysis.rule.reasoning_steps.length && (
                           <div className="nc-fix">
-                            <h4>Fix</h4>
-                            <ul>
-                              {msg.analysis.rule.fix_steps.map((f, i) => (
+                                      <h4>Fix</h4>
+                                      <ul>                              {msg.analysis.rule.fix_steps.map((f, i) => (
                                 <li key={i} className="nc-step nc-step--fix">{f}</li>
                               ))}
                             </ul>
@@ -173,9 +172,8 @@ export default function NewChatPage() {
                         </ul>
                         {msg.progress.llm >= msg.analysis.llm.reasoning_steps.length && (
                           <div className="nc-fix">
-                            <h4>Fix</h4>
-                            <ul>
-                              {msg.analysis.llm.fix_steps.map((f, i) => (
+                                      <h4>Fix</h4>
+                                      <ul>                              {msg.analysis.llm.fix_steps.map((f, i) => (
                                 <li key={i} className="nc-step nc-step--fix">{f}</li>
                               ))}
                             </ul>

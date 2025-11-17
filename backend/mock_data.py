@@ -20,7 +20,7 @@ def build_mock_analysis(code: str) -> Dict[str, StepAnalysis]:
         icon="⚙️",
         title="Hệ thống",
         reasoning_steps=[
-            "Đọc cấu trúc vòng lặp để kiểm tra biên.",
+            "Đọc cấu trúc vòng lặp để kiểm tra biên. À mn phân công thuyết trình nha để có gì ai nói phần nào muốn sửa slide cho đúng ý để dễ nói nha",
             f"Phát hiện range(len({var})+1) có thể vượt chỉ số.",
             "Giới hạn hợp lệ là 0..len(xs)-1.",
         ],
@@ -29,6 +29,7 @@ def build_mock_analysis(code: str) -> Dict[str, StepAnalysis]:
             "Kiểm thử lại với biên nhỏ ([], [1]).",
         ],
         suggested_patch=f"for i in range(len({var})):",
+        highlightLines=[3,4],
     )
     llm = StepAnalysis(
         icon="🤖",
@@ -36,12 +37,12 @@ def build_mock_analysis(code: str) -> Dict[str, StepAnalysis]:
         reasoning_steps=[
             "Xác thực logic so sánh và truy cập phần tử.",
             f"Chỉ số len({var}) sẽ gây IndexError.",
-            "Cần lặp tới len(xs)-1 hoặc duyệt trực tiếp giá trị.",
+            "Cần lặp tới len(xs)-1 hoặc duyệt trực tiếp giá trị.chắc là ai làm phần nào thì tt phần đó là rõ nhấtchắc là ai làm phần nào thì tt phần đó là rõ nhấtchắc là ai làm phần nào thì tt phần đó là rõ nhất",
         ],
         fix_steps=[
             f"Thay bằng range(len({var})).",
-            "Hoặc dùng for v in xs: if v > m: m = v.",
+            "Hoặc dùng for v in xs: if v > m: m = v.phần 2.3 tui để lại dưới dạng bảng cho ngắn gọn nhaphần 2.3 tui để lại dưới dạng bảng cho ngắn gọn nhaphần 2.3 tui để lại dưới dạng bảng cho ngắn gọn nha",
         ],
-        suggested_patch=f"for i in range(len({var})):",
+        suggested_patch=f"for i in range(len({var})):phần 2.3 tui để lại dưới dạng bảng cho ngắn gọn nhaphần 2.3 tui để lại dưới dạng bảng cho ngắn gọn nhaphần 2.3 tui để lại dưới dạng bảng cho ngắn gọn nha",
     )
     return {"rule": rule, "llm": llm}
